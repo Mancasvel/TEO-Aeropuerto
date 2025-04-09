@@ -61,7 +61,7 @@ En este primer bloque se define el tipo base **Vuelo** con la siguiente descripc
 - **R1**: El número de plazas debe ser mayor o igual que cero.
 - **R2**: El número de pasajeros debe ser mayor que cero.
 - **R3**: El precio debe ser mayor o igual que cero.
-- **R4**: El número de pasajeros debe inferior o igual que el número de plazas.
+- **R4**: El número de pasajeros debe ser inferior o igual que el número de plazas.
 - **R5**: El número de tripulantes del avión debe ser superior o igual a 3 (un piloto, un copiloto y al menos un auxiliar).
 - **R6**: Los códigos de los tripulantes del avión deben tener 6 caracteres, los dos primeros deben ser alfabéticos (en mayúsculas) y los cuatro últimos numéricos. 
 - **R7**: Una tripulación debe tener al menos un piloto, un copiloto y un asistente. Si hay más de tres tripulantes, desde el cuarto en adelante deben ser auxiliares.
