@@ -1,6 +1,7 @@
 package exercise;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Vuelos {
 	
@@ -52,7 +53,23 @@ public class Vuelos {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		if (this == obj) return true;
+		if (!(obj instanceof Vuelos)) return false; 
+		 Vuelos that = (Vuelos) obj;                        // Ahora es seguro hacer cast
+		    return Objects.equals(nombre, that.nombre) &&
+		           Objects.equals(vuelos, that.vuelos);
+	}
+	
+	public Integer getNumPasajerosDestino(String destino) {
+		
+		return vuelos.stream()
+				.filter(v -> v.getDestino().equals(destino))
+				.mapToInt(v -> v.getNumPasajeros())
+				.sum();
+	}
+	public void incorporaVuelo(Vuelo v) {
+		if (!vuelos.contains(v)) {
+			vuelos.add(v);
+		}
 	}
 }
