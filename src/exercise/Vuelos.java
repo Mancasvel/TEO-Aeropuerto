@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Vuelos {
 	
 	private String nombre;
-	private List<Vuelo> vuelos;
+	protected List<Vuelo> vuelos;
 	private Integer numVuelos;
 	private Integer numPasajeros;
 	private Double precioMedio;
@@ -95,10 +95,8 @@ public class Vuelos {
 				return true;
 				
 			}
-			
 		}
 		return false;
-		
-		
+
 	}
 }
