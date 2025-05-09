@@ -56,5 +56,20 @@ public class VuelosB2 extends Vuelos{
 		return mejorVuelo;
 		
 	}
+	public Vuelo vueloMenorFechaPrecioDestino(String destino) {
+		Vuelo mejorVuelo = null;
+		for(Vuelo v: vuelos) {
+			if(v.getDestino().equals(destino)) {
+				// 1 saber si lista vacia 2 comparar fecha 3 si fecha igual comparar precio
+				if(mejorVuelo == null 
+						|| v.getFecha().isBefore(mejorVuelo.getFecha())
+						|| v.getFecha().isEqual(mejorVuelo.getFecha()) && v.getPrecio() < mejorVuelo.getPrecio()) {
+					mejorVuelo = v;
+				}
+			}
+		}
+		return mejorVuelo;
+		
+	}
 
 }
