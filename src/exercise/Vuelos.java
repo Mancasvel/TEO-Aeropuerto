@@ -1,5 +1,7 @@
 package exercise;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -71,5 +73,32 @@ public class Vuelos {
 		if (!vuelos.contains(v)) {
 			vuelos.add(v);
 		}
+	}
+	public void incorporaVuelos(Collection<Vuelo> vuelos) {
+		for(Vuelo v : vuelos) {
+			if(!vuelos.contains(v)) {
+				vuelos.add(v);
+			}
+		}
+	}
+	public void eliminaVuelo(Vuelo v) {
+		if(vuelos.contains(v)) {
+			vuelos.remove(v);
+		}
+	}
+	public void ordena() {
+		Collections.sort(vuelos);
+	}
+	public Boolean existeVueloDestino(String destino) {
+		for(Vuelo v : vuelos) {
+			if(v.getDestino().equals(destino)) {
+				return true;
+				
+			}
+			
+		}
+		return false;
+		
+		
 	}
 }
