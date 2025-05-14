@@ -4,8 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class VuelosB2 extends Vuelos{
 
@@ -121,16 +125,49 @@ public class VuelosB2 extends Vuelos{
 			codigos.add(v.getCodigo());
 			
 			codigosDestino.put(destino, codigos);
+
+		}
+
+		return codigosDestino;
+
+		
+	}
+	
+	public Map<String, Set<LocalDate>>  fechasVuelosDestinoLibres(){
+		Map<String, Set<LocalDate>> destinoFechas = new HashMap<>();
+		
+		for(Vuelo v: vuelos) {
+			String destino = v.getDestino();
+			Set<LocalDate> fechas = destinoFechas.getOrDefault(destino, new HashSet<>());
+			if(v.getPlazasDisponibles()>0) {
+				fechas.add(v.getFecha());
+				destinoFechas.put(destino, fechas);
+				
+			}	
+		}
+		
+		return destinoFechas;
+	}
+	
+	public Map<String, SortedSet<LocalDate>> fechasDestinoOrdenadas(){
+		Map<String, SortedSet<LocalDate>> destinoFechas = new HashMap<>();
+		
+		for (Vuelo v: vuelos) {
+			String destino = v.getDestino();
+			LocalDate fecha = v.getFecha();
+			
+			SortedSet<LocalDate> fechas = destinoFechas.getOrDefault(destino, new TreeSet<>());
+			
+			fechas.add(fecha);
+			
+			destinoFechas.put(destino, fechas);
+			
 			
 			
 		}
 		
 		
-		
-		return codigosDestino;
-		
-		
-		
+		return destinoFechas;
 		
 	}
 }
