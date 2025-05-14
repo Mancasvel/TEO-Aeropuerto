@@ -1,6 +1,10 @@
 package exercise;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VuelosB2 extends Vuelos{
 
@@ -70,6 +74,29 @@ public class VuelosB2 extends Vuelos{
 		}
 		return mejorVuelo;
 		
+	}
+	
+	public Map<String, Integer> destinoNumVuelos(){
+		Map<String, Integer> vueloDest = new HashMap<>();
+		
+		for(Vuelo v: vuelos){
+			String destino = v.getDestino();
+			vueloDest.put(destino, vueloDest.getOrDefault(vueloDest, 0)+ 1);
+
+		}
+		return vueloDest;
+		
+		
+	}
+	public Map<LocalDate, Integer> fechaNumVuelos(){
+		Map<LocalDate, Integer> vuelosFecha = new HashMap<>();
+		
+		for(Vuelo v: vuelos) {
+			LocalDate fecha = v.getFecha();
+			vuelosFecha.put(fecha, vuelosFecha.getOrDefault(fecha, 0)+1);
+		}
+		
+		return vuelosFecha;	
 	}
 
 }
