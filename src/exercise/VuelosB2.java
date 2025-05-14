@@ -1,6 +1,7 @@
 package exercise;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -98,5 +99,38 @@ public class VuelosB2 extends Vuelos{
 		
 		return vuelosFecha;	
 	}
+	public Map<LocalDate, Integer> fechaNumPasajeros(){
+		
+		Map<LocalDate, Integer> pasajerosFecha = new HashMap<>();
+		
+		for(Vuelo v: vuelos) {
+			LocalDate fecha = v.getFecha();
+			pasajerosFecha.put(fecha, pasajerosFecha.getOrDefault(fecha, 0) + v.getNumPasajeros());
+		}
+		return pasajerosFecha;
+	}
 
+	public Map<String, List<String>> destinoListaCodigos(){
+		
+		Map<String, List<String>> codigosDestino = new HashMap<>();
+		
+		for (Vuelo v: vuelos) {
+			String destino = v.getDestino();
+			List<String> codigos = codigosDestino.getOrDefault(destino, new ArrayList<>());
+			
+			codigos.add(v.getCodigo());
+			
+			codigosDestino.put(destino, codigos);
+			
+			
+		}
+		
+		
+		
+		return codigosDestino;
+		
+		
+		
+		
+	}
 }
