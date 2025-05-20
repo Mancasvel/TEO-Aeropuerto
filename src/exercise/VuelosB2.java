@@ -2,6 +2,7 @@ package exercise;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class VuelosB2 extends Vuelos{
 
@@ -160,7 +162,7 @@ public class VuelosB2 extends Vuelos{
 			
 			fechas.add(fecha);
 			
-			destinoFechas.put(destino, fechas);
+			destinoFechas.put(destino, fechas); 	
 			
 			
 			
@@ -170,4 +172,74 @@ public class VuelosB2 extends Vuelos{
 		return destinoFechas;
 		
 	}
+	
+	public SortedSet<Vuelo> obtenerVuelosOrdenadosPorFecha(List<Vuelo> vuelos) {
+	    SortedSet<Vuelo> vuelosOrdenados = new TreeSet<>(Comparator.comparing(v ->v.getFecha()));
+
+	    for (Vuelo v : vuelos) {
+	        vuelosOrdenados.add(v);
+	    }
+
+	    return vuelosOrdenados;
+	}
+	
+	public LocalDate diaMenosPasajeros() {
+		
+		LocalDate dia = null;
+		Map<LocalDate, Integer> fechaPasajeros = new HashMap<>();
+		
+		for(Vuelo v: vuelos) {
+			LocalDate fecha = v.getFecha();
+			Integer pasajeros = v.getNumPasajeros();
+			
+			fechaPasajeros.put(fecha, fechaPasajeros.getOrDefault(fecha, 0) + pasajeros);
+			
+		}
+		 dia = fechaPasajeros.entrySet()
+		            .stream()
+		            .min(Map.Entry.comparingByValue())  // compara por número de pasajeros
+		            .map(Map.Entry::getKey)             // obtenemos la fecha (clave)
+		            .orElse(null);                      // por si el mapa está vacío
+
+		    return dia;
+		
+		
+		
+	}
+	public Boolean existeVueloDestino(String destino) {
+		Boolean res = false;
+		
+		res = vuelos.stream()
+				.anyMatch(v -> v.getDestino().equals(destino));
+		
+		return res;
+	}
+
+	public Boolean todosVuelosNPasajeros(int n) {
+		Boolean res = false;
+		
+		res = vuelos.stream()
+				.allMatch(v -> v.getNumPasajeros() == n);
+		
+		return res;
+	}
+	
+	public List<Vuelo> vuelosPostFecha(LocalDate fecha){
+		
+		return vuelos.stream()
+				.filter(v -> v.getFecha().isAfter(fecha))
+				.collect(Collectors.toList());
+		
+	}
+
+	
+	public List<Vuelo> vuelosNBaratos(Integer n){
+		
+		return vuelos.stream()
+				.sorted(Comparator.comparingDouble(v -> v.getPrecio()))
+				.limit(n)
+				.collect(Collectors.toList());
+		
+	}
+
 }
