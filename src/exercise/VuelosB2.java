@@ -241,5 +241,71 @@ public class VuelosB2 extends Vuelos{
 				.collect(Collectors.toList());
 		
 	}
+	
+	public Long numDestinosDifFecha(LocalDate fecha) {
+		
+		return vuelos.stream()
+			.filter(v -> v.getFecha().equals(fecha))
+			.map(v -> v.getDestino())
+			.distinct()
+			.count();
+			
+	}
+	public Set<Vuelo> ordenNaturalTipo(){
+		
+		return vuelos.stream()
+				.collect(Collectors.toCollection(() -> new TreeSet<>()));
+		
+	}
+	// agrupar vuelos por fecha
+	
+	public Map<LocalDate, List<Vuelo>> fechasVuelos(){
+		return vuelos.stream()
+				.collect(Collectors.groupingBy(v -> v.getFecha()));		
+	}
+	
+	public Map<LocalDate, List<Double>> fechasPrecios(){
+		return vuelos.stream()
+				.collect(Collectors.groupingBy(v -> v.getFecha(),
+						Collectors.mapping(v-> v.getPrecio(), Collectors.toList())));		
+	}
+	
+	public Map<LocalDate, Double> fechasMediasPrecios() {
+	    return vuelos.stream()
+	        .collect(Collectors.groupingBy(
+	            v -> v.getFecha(),
+	            Collectors.averagingDouble(v -> v.getPrecio())
+	        ));
+	}
 
+	
+	public Map<LocalDate, Set<String>> fechaDestinos(){
+		
+		return vuelos.stream()
+				.collect(Collectors.groupingBy(
+						v -> v.getFecha(),
+						Collectors.mapping(v -> v.getDestino(), Collectors.toSet())));
+	}	
+	
+	public Map<LocalDate, Set<Double>> fechaPreciosAscendentes(){
+		
+		return vuelos.stream()
+				.collect(Collectors.groupingBy(
+						v -> v.getFecha(),
+						Collectors.mapping(v -> v.getPrecio(),
+								Collectors.toCollection(() -> new TreeSet<>((a, b) -> b.compareTo(a))
+										))));
+	}
+	public Map<String, List<String>> origenesVuelosTripulante(){
+		Map<String, List<String>> vuelosTripulante = new HashMap<>();
+		
+		vuelosTripulante = vuelos.stream()
+				.collect(Collectors.groupingBy(v -> v.getOrigen(),
+						Collectors.flatMapping(v -> v.getTripulacion().stream(), Collectors.toList())));
+		
+		return vuelosTripulante;
+	}
+
+	
+	
 }
